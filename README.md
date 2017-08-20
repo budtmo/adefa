@@ -1,7 +1,7 @@
 ADEFA
 =====
 
-ADEFA which stand for AWS Device Farm is a CLI to help test developer to run UI tests on AWS Device Farm.
+ADEFA stands for AWS Device Farm which is a CLI to help test developer running UI tests on AWS Device Farm.
 
 Requirement
 -----------
