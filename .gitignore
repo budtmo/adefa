@@ -1,0 +1,9 @@
+.idea/*
+
+*.pyc
+
+# Coverage
+coverage/*
+.coverage
+coverage.xml
+xunit.xml
