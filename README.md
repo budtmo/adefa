@@ -1,3 +1,6 @@
+[![Build Status](https://travis-ci.org/butomo1989/adefa.svg?branch=master)](https://travis-ci.org/butomo1989/adefa)
+[![codecov](https://codecov.io/gh/butomo1989/adefa/branch/master/graph/badge.svg)](https://codecov.io/gh/butomo1989/adefa)
+
 ADEFA
 =====
 
