@@ -8,15 +8,13 @@ from adefa.tests import runner
 import mock
 
 
-class TestCreate(TestCase):
+class TestDelete(TestCase):
     """Unit test class to test data deletion."""
 
-    def test_delete_project(self):
-        cli.client.delete_project = mock.MagicMock()
-        result = runner.invoke(cli.delete, ['project', 'arn:aws:devicefarm:us-west-2:xxx'])
-        self.assertEqual(result.exit_code, 0)
+    def test_delete(self):
+        cli.client = mock.MagicMock()
 
-    def test_delete_upload(self):
-        cli.client.delete_upload = mock.MagicMock()
-        result = runner.invoke(cli.delete, ['upload', 'arn:aws:devicefarm:us-west-2:xxx'])
-        self.assertEqual(result.exit_code, 0)
+        arguments = ['project', 'upload', 'group', 'run']
+        for a in arguments:
+            delete_operation = runner.invoke(cli.delete, [a, 'arn:aws:devicefarm:us-west-2:xxx'])
+            self.assertEqual(delete_operation.exit_code, 0)
