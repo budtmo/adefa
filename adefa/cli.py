@@ -38,7 +38,17 @@ def print_item(item: dict):
         raise
 
 
+def print_version(ctx, param, value):
+    if not value or ctx.resilient_parsing:
+        return
+    from . import __version__
+    click.echo('adefa {}'.format(__version__))
+    ctx.exit()
+
+
 @click.group(context_settings=dict(help_option_names=['-h', '--help']))
+@click.option('-v', '--version', is_flag=True, callback=print_version, expose_value=False, is_eager=True,
+              help='Print the current version number and exit.')
 def cli():
     pass
 
@@ -147,7 +157,7 @@ def upload(name, project, file, type):
 @click.option('-d', '--device', required=True, multiple=True, help='Device arn')
 def group(name, project, device):
     """
-    Create a device group / pool
+    Create a device group / pool.
     :param name: group name
     :param project: project id
     :param device: device id
