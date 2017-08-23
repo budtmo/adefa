@@ -72,7 +72,7 @@ Quick Start
 6. Get test result
 
    ```bash
-   adefa result $RUN_ID --total-attempts 10 --delay 30 --json-output
+   adefa result $RUN_ID --total-attempts 15 --delay 30 --json-output
    ```
 
 Unit tests
