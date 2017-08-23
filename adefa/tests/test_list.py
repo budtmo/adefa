@@ -13,7 +13,7 @@ class TestList(TestCase):
     """Unit test class to test get list of data."""
 
     def test_list(self, mocked_print):
-        items = ['devices', 'projects', 'groups', 'uploads', 'runs']
+        items = ['devices', 'projects', 'groups', 'uploads', 'runs', 'jobs']
         for pos, item in enumerate(items):
             cli.client = mock.MagicMock()
             if pos > 1:

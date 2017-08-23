@@ -55,9 +55,9 @@ Quick Start
 4. Create device group
 
    For example we want to create device group from following devices:
-   1. Samsung Galaxy S7 Edge - arn:aws:devicefarm:us-west-2::device:270E0E7C4512409A81CF7F8CE48B814B
-   2. HTC One M8 (AT&T) - arn:aws:devicefarm:us-west-2::device:784D54EA42DF4030B669587FC2B5184E
-   3. LG Nexus 5 - arn:aws:devicefarm:us-west-2::device:DAFD5E60762748C98D662E0320E3FE66
+   - Samsung Galaxy S7 Edge - arn:aws:devicefarm:us-west-2::device:270E0E7C4512409A81CF7F8CE48B814B
+   - HTC One M8 (AT&T) - arn:aws:devicefarm:us-west-2::device:784D54EA42DF4030B669587FC2B5184E
+   - LG Nexus 5 - arn:aws:devicefarm:us-west-2::device:DAFD5E60762748C98D662E0320E3FE66
 
    ```bash
    export GROUP_ID=$(adefa group --name myDeviceGroup --project $PROJECT_ID --device arn:aws:devicefarm:us-west-2::device:270E0E7C4512409A81CF7F8CE48B814B --device arn:aws:devicefarm:us-west-2::device:784D54EA42DF4030B669587FC2B5184E --device arn:aws:devicefarm:us-west-2::device:DAFD5E60762748C98D662E0320E3FE66)
@@ -66,13 +66,14 @@ Quick Start
 5. Run test
 
    ```bash
-   adefa run --name firstRun --project $PROJECT_ID --app $APP_ID --type APPIUM_PYTHON --test $TEST_ID --group $GROUP_ID
+   export RUN_ID=$(adefa run --name firstRun --project $PROJECT_ID --app $APP_ID --type APPIUM_PYTHON --test $TEST_ID --group $GROUP_ID)
    ```
 
 6. Get test result
 
-   //TODO
-
+   ```bash
+   adefa result $RUN_ID --total-attempts 10 --delay 30 --json-output
+   ```
 
 Unit tests
 ----------

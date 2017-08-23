@@ -65,13 +65,13 @@ def create(name):
 
 
 @cli.command()
-@click.argument('type', type=click.Choice(['devices', 'projects', 'uploads', 'groups', 'runs', 'results']))
+@click.argument('type', type=click.Choice(['devices', 'projects', 'uploads', 'groups', 'runs', 'jobs']))
 @click.argument('arn', type=str, required=False)
 def list(type, arn):
     """
     Get list of data by selected type.
     :param type: devices, projects | uploads | pools | runs | results
-    :param arn: project id
+    :param arn: project id | run id
     """
     res = None
 
@@ -79,6 +79,10 @@ def list(type, arn):
         res = client.list_devices().get('devices')
     elif type == 'projects':
         res = client.list_projects().get('projects')
+    elif type == 'jobs':
+        if not arn:
+            arn = click.prompt('Enter run arn', type=str)
+        res = client.list_jobs(arn=arn).get('jobs')
     else:
         if not arn:
             arn = click.prompt('Enter project arn', type=str)
@@ -197,7 +201,71 @@ def run(name, project, app, type, test, group):
     res = client.schedule_run(
         name=name, projectArn=project, appArn=app, test={'type': type, 'testPackageArn': test}, devicePoolArn=group
     )
-    print(res.get('run'))
+    print(res.get('run').get('arn'))
+
+
+@cli.command()
+@click.argument('arn', type=str, required=True)
+@click.option('-a', '--total-attempts', type=int, default=10, help='Total attempts to check the result.')
+@click.option('-d', '--delay', type=float, default=30, help='Delay time between attempt.')
+@click.option('-j', '--json-output', is_flag=True, default=False, help='Print result as json format.')
+def result(arn, total_attempts, delay, json_output):
+    """
+    Get result by run id.
+    :param arn: run id
+    :param total_attempts: total attempts
+    :param delay: delay time between attempt
+    :param json_output: print as json format if True
+    """
+    # Waiting until run is completed (10 attempts with given sleep interval)
+    attempt = 1
+    try:
+        while attempt <= total_attempts:
+            run = client.get_run(arn=arn).get('run')
+            status = run.get('status')
+
+            if status:
+                from time import sleep
+                if status != 'COMPLETED':
+                    print('Attempt: {}'.format(attempt))
+                    print('Test status: {}'.format(status))
+                    sleep(delay)
+                    attempt += 1
+                    if attempt > total_attempts:
+                        print('--TIMEOUT--')
+                else:
+                    # Get list of jobs by run arn / id
+                    jobs = client.list_jobs(arn=arn).get('jobs')
+
+                    # Delete unneeded key
+                    for j in jobs:
+                        for k in j.copy().keys():
+                            if 'arn' not in k and 'name' not in k:
+                                j.pop(k, None)
+
+                    # Add XML and Video key
+                    items = ['xml', 'video']
+                    for j in jobs:
+                        artifacts = client.list_artifacts(arn=j.get('arn'), type='FILE').get('artifacts')
+
+                        for a in artifacts:
+                            for i in items:
+                                if i in a.get('type').lower():
+                                    j[i] = a.get('url')
+
+                    if json_output:
+                        import json
+                        print(json.dumps(jobs))
+                    else:
+                        print_api_response(jobs)
+                    break
+            else:
+                print('Run status cannot be found!')
+                break
+    except AttributeError:
+        raise
+    except TypeError:
+        raise
 
 
 if __name__ == '__main__':
