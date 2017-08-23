@@ -118,14 +118,14 @@ def delete(type, arn):
 @cli.command()
 @click.option('-n', '--name', required=True, help='Upload name')
 @click.option('-p', '--project', required=True, help='Project arn')
-@click.option('-f', '--file', required=True, help='File path (.ipa|.apk|.zip)')
 @click.option('-t', '--type', required=True, help='Upload type', type=click.Choice([
     'ANDROID_APP', 'IOS_APP, WEB_APP', 'EXTERNAL_DATA', 'APPIUM_JAVA_JUNIT_TEST_PACKAGE',
     'APPIUM_JAVA_TESTNG_TEST_PACKAGE', 'APPIUM_PYTHON_TEST_PACKAGE', 'APPIUM_WEB_JAVA_JUNIT_TEST_PACKAGE',
     'APPIUM_WEB_JAVA_TESTNG_TEST_PACKAGE', 'APPIUM_WEB_PYTHON_TEST_PACKAGE', 'CALABASH_TEST_PACKAGE',
     'INSTRUMENTATION_TEST_PACKAGE', 'UIAUTOMATION_TEST_PACKAGE', 'UIAUTOMATOR_TEST_PACKAGE',
     'XCTEST_TEST_PACKAGE', 'XCTEST_UI_TEST_PACKAGE)']))
-def upload(name, project, file, type):
+@click.option('-f', '--file', required=True, help='File path (.ipa|.apk|.zip)')
+def upload(name, project, type, file):
     """
     Upload an app or test script.
     :param name: upload name
