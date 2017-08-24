@@ -209,13 +209,16 @@ def run(name, project, app, type, test, group):
 @click.option('-a', '--total-attempts', type=int, default=10, help='Total attempts to check the result.')
 @click.option('-d', '--delay', type=float, default=30, help='Delay time between attempt.')
 @click.option('-j', '--json-output', is_flag=True, default=False, help='Print result as json format.')
-def result(arn, total_attempts, delay, json_output):
+@click.option('-r', '--result-only', is_flag=True, default=False,
+              help='Print only the result as soon as run is completed.')
+def result(arn, total_attempts, delay, json_output, result_only):
     """
     Get result by run id.
     :param arn: run id
     :param total_attempts: total attempts
     :param delay: delay time between attempt
     :param json_output: print as json format if True
+    :param result_only: print only the result as soon as run is completed if True
     """
     # Waiting until run is completed (10 attempts with given sleep interval)
     attempt = 1
@@ -227,12 +230,13 @@ def result(arn, total_attempts, delay, json_output):
             if status:
                 from time import sleep
                 if status != 'COMPLETED':
-                    print('Attempt: {}'.format(attempt))
-                    print('Test status: {}'.format(status))
-                    sleep(delay)
-                    attempt += 1
-                    if attempt > total_attempts:
-                        print('--TIMEOUT--')
+                    if not result_only:
+                        print('Attempt: {}'.format(attempt))
+                        print('Test status: {}'.format(status))
+                        sleep(delay)
+                        attempt += 1
+                        if attempt > total_attempts:
+                            print('--TIMEOUT--')
                 else:
                     # Get list of jobs by run arn / id
                     jobs = client.list_jobs(arn=arn).get('jobs')
@@ -260,7 +264,8 @@ def result(arn, total_attempts, delay, json_output):
                         print_api_response(jobs)
                     break
             else:
-                print('Run status cannot be found!')
+                if not result_only:
+                    print('Run status cannot be found!')
                 break
     except AttributeError:
         raise

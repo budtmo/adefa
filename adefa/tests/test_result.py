@@ -24,7 +24,7 @@ class TestResult(TestCase):
         result = runner.invoke(cli.result, ['arn'])
         self.assertEqual(result.exit_code, 0)
 
-        result = runner.invoke(cli.result, ['arn', '--json-output'])
+        result = runner.invoke(cli.result, ['arn', '--json-output', '--result-only'])
         self.assertEqual(result.exit_code, 0)
 
     def test_pull_attempts(self):
