@@ -23,7 +23,6 @@ class SimpleAndroidUITests(unittest.TestCase):
 
         self.assertEqual('10', text_fields[2].text)
 
-
 if __name__ == '__main__':
     suite = unittest.TestLoader().loadTestsFromTestCase(SimpleAndroidUITests)
     unittest.TextTestRunner(verbosity=2).run(suite)

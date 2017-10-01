@@ -1,3 +1,5 @@
+.DS_Store
+
 .idea/*
 
 *.pyc
@@ -7,3 +9,6 @@ coverage/*
 .coverage
 coverage.xml
 xunit.xml
+
+# Test files
+test-app/appium-python/wheelhouse

@@ -49,7 +49,7 @@ Quick Start
 3. Upload test scripts
 
    ```bash
-   export TEST_ID=$(adefa upload --name myTestScript --project $PROJECT_ID --type APPIUM_PYTHON_TEST_PACKAGE --file https://github.com/butomo1989/adefa/blob/master/test-app/appium-python/test_bundle.zip?raw=true)
+   export TEST_ID=$(adefa upload --name myTestScript --project $PROJECT_ID --type APPIUM_PYTHON_TEST_PACKAGE --file https://github.com/butomo1989/adefa/blob/master/test-app/appium-python/test_scripts_app.zip?raw=true)
    ```
 
 4. Create device group
