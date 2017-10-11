@@ -119,7 +119,7 @@ def delete(type, arn):
 @click.option('-n', '--name', required=True, help='Upload name')
 @click.option('-p', '--project', required=True, help='Project arn')
 @click.option('-t', '--type', required=True, help='Upload type', type=click.Choice([
-    'ANDROID_APP', 'IOS_APP, WEB_APP', 'EXTERNAL_DATA', 'APPIUM_JAVA_JUNIT_TEST_PACKAGE',
+    'ANDROID_APP', 'IOS_APP', 'WEB_APP', 'EXTERNAL_DATA', 'APPIUM_JAVA_JUNIT_TEST_PACKAGE',
     'APPIUM_JAVA_TESTNG_TEST_PACKAGE', 'APPIUM_PYTHON_TEST_PACKAGE', 'APPIUM_WEB_JAVA_JUNIT_TEST_PACKAGE',
     'APPIUM_WEB_JAVA_TESTNG_TEST_PACKAGE', 'APPIUM_WEB_PYTHON_TEST_PACKAGE', 'CALABASH_TEST_PACKAGE',
     'INSTRUMENTATION_TEST_PACKAGE', 'UIAUTOMATION_TEST_PACKAGE', 'UIAUTOMATOR_TEST_PACKAGE',
@@ -181,7 +181,7 @@ def group(name, project, device):
 @cli.command()
 @click.option('-n', '--name', required=True, help='Run name')
 @click.option('-p', '--project', required=True, help='Project arn')
-@click.option('-a', '--app', required=True, help='App arn')
+@click.option('-a', '--app', required=False, help='App arn')
 @click.option('-r', '--type', required=True, help='Type of run', type=click.Choice([
     'BUILTIN_FUZZ', 'BUILTIN_EXPLORER, APPIUM_JAVA_JUNIT', 'APPIUM_JAVA_TESTNG', 'APPIUM_PYTHON',
     'APPIUM_WEB_JAVA_JUNIT', 'APPIUM_WEB_JAVA_TESTNG', 'APPIUM_WEB_PYTHON', 'CALABASH', 'INSTRUMENTATION',
@@ -198,9 +198,14 @@ def run(name, project, app, type, test, group):
     :param test: test id
     :param group: device group id
     """
-    res = client.schedule_run(
-        name=name, projectArn=project, appArn=app, test={'type': type, 'testPackageArn': test}, devicePoolArn=group
-    )
+    if app:
+        res = client.schedule_run(
+            name=name, projectArn=project, appArn=app, test={'type': type, 'testPackageArn': test}, devicePoolArn=group
+        )
+    else:
+        res = client.schedule_run(
+            name=name, projectArn=project, test={'type': type, 'testPackageArn': test}, devicePoolArn=group
+        )
     print(res.get('run').get('arn'))
 
 
