@@ -1,5 +1,5 @@
-[![Build Status](https://travis-ci.org/butomo1989/adefa.svg?branch=master)](https://travis-ci.org/butomo1989/adefa)
-[![codecov](https://codecov.io/gh/butomo1989/adefa/branch/master/graph/badge.svg)](https://codecov.io/gh/butomo1989/adefa)
+[![Build Status](https://travis-ci.org/budtmo/adefa.svg?branch=master)](https://travis-ci.org/budtmo/adefa)
+[![codecov](https://codecov.io/gh/budtmo/adefa/branch/master/graph/badge.svg)](https://codecov.io/gh/budtmo/adefa)
 
 ADEFA
 =====
@@ -22,7 +22,7 @@ Installation
 ------------
 
 ```bash
-pip3 install -e git+https://github.com/butomo1989/adefa.git#egg=adefa
+pip3 install -e git+https://github.com/budtmo/adefa.git#egg=adefa
 ```
 
 Usage
@@ -43,13 +43,13 @@ Quick Start
 2. Upload app
 
    ```bash
-   export APP_ID=$(adefa upload --name sample.apk --project $PROJECT_ID --type ANDROID_APP --file https://github.com/butomo1989/adefa/blob/master/test-app/sample_apk_debug.apk?raw=true)
+   export APP_ID=$(adefa upload --name sample.apk --project $PROJECT_ID --type ANDROID_APP --file https://github.com/budtmo/adefa/blob/master/test-app/sample_apk_debug.apk?raw=true)
    ```
 
 3. Upload test scripts
 
    ```bash
-   export TEST_ID=$(adefa upload --name myTestScript --project $PROJECT_ID --type APPIUM_PYTHON_TEST_PACKAGE --file https://github.com/butomo1989/adefa/blob/master/test-app/appium-python/test_scripts_app.zip?raw=true)
+   export TEST_ID=$(adefa upload --name myTestScript --project $PROJECT_ID --type APPIUM_PYTHON_TEST_PACKAGE --file https://github.com/budtmo/adefa/blob/master/test-app/appium-python/test_scripts_app.zip?raw=true)
    ```
 
 4. Create device group
