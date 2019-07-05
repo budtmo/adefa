@@ -1,4 +1,5 @@
 [![Build Status](https://travis-ci.org/budtmo/adefa.svg?branch=master)](https://travis-ci.org/budtmo/adefa)
+[![Build Status](https://dev.azure.com/budtmoos/budtmoos/_apis/build/status/budtmo.adefa?branchName=master)](https://dev.azure.com/budtmoos/budtmoos/_build/latest?definitionId=2&branchName=master)
 [![codecov](https://codecov.io/gh/budtmo/adefa/branch/master/graph/badge.svg)](https://codecov.io/gh/budtmo/adefa)
 
 ADEFA
